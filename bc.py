@@ -10,6 +10,12 @@ while True:
         day = int(input('Which day in that month?\n'))
 
         date_birth = dt.datetime(year, month, day)
+
+        current_year = dt.datetime.now().year
+        if year > current_year:
+            print('Birth year must be in the past.\n')
+            continue
+
         break
 
     except ValueError:
@@ -44,10 +50,7 @@ dd = next_bday - current_time
 
 days_left = dd.days
 total_seconds_left = dd.seconds
-
-# print(type(dd))
-
-# We will convert seconds to HRS, MIN, SEC
+exot()
 seconds_left = total_seconds_left % 60
 total_mins_left = total_seconds_left // 60
 hrs_left = total_mins_left // 60
@@ -56,16 +59,12 @@ minutes_left = total_mins_left % 60
 total_mins_left, seconds_left = divmod(total_seconds_left, 60)
 hrs_left, minutes_left = divmod(total_mins_left, 60)
 
-#print('Your next birthday is', days_left, 'days', hrs_left, 'hrs', minutes_left, 'mins', seconds_left, 'secs away.')
-input()
-
 while next_bday > current_time:
     current_time = dt.datetime.now()
     dd = next_bday - current_time
     days_left = dd.days
     total_seconds_left = dd.seconds
 
-    # We will convert seconds to HRS, MIN, SEC
     seconds_left = total_seconds_left % 60
     total_mins_left = total_seconds_left // 60
     hrs_left = total_mins_left // 60
