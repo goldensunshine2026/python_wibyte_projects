@@ -3,10 +3,8 @@ import time
 
 
 
-cards = ['2', '3', '4', '5', '6', '7', '8', '9', 'X', 'J', 'Q', 'K', 'A']             # '10 written as 'X'
-suits = ['C', 'D', 'H', 'S']     # ‘C’ for ‘Clubs’; ‘D’ for ‘Diamonds’; ‘H’ for ‘Hearts’; ‘S’ for ‘Spades’
-
-# Create a deck of cards (Another list that has all the combinations)
+cards = ['2', '3', '4', '5', '6', '7', '8', '9', 'X', 'J', 'Q', 'K', 'A']             
+suits = ['C', 'D', 'H', 'S']  
 
 deck_of_cards = []; 
 
@@ -26,9 +24,6 @@ print('Shuffled Deck:')
 for kk in range(len(deck_of_cards)):
     print(deck_of_cards[kk], end = ' ')
 
-# Toss
-# Pick 3 random cards from the pile and take their sum
-
 toss_cards = random.sample(deck_of_cards, 3)
 print()
 print("Toss cards are:", toss_cards[0], toss_cards[1], toss_cards[2])
@@ -46,16 +41,11 @@ else:
     first_mover = 'computer'
     print('Computer won the toss, it will play first')
 
-# Deal the cards
-
 player_cards = deck_of_cards[0:26:1]
 comput_cards = deck_of_cards[26:52:1]
 table_cards = []
 
-# SORT PLAYER CARDS AT START
-player_cards.sort(key=lambda x: (cards.index(x[1]), suits.index(x[0])))
-
-# Both computer and the player pick up their first card. 
+player_cards.sort(key=lambda x: (cards.index(x[1]), suits.index(x[0]))) 
 
 move_complete = False
 game_complete = False
@@ -100,10 +90,8 @@ while not(game_complete):
     print()
     print("Player Cards:", len(player_cards), "Computer Cards:", len(comput_cards), "Table Cards:", len(table_cards))
 
-    # PLAYER CHOOSES ANY CARD
     card_p = choose_player_card(player_cards, "Choose a card number to play: ")
 
-    # COMPUTER PLAYS A RANDOM CARD
     comp_index = random.randint(0, len(comput_cards)-1)
     card_c = comput_cards.pop(comp_index)
 
@@ -121,7 +109,6 @@ while not(game_complete):
       player_cards.extend(table_cards)
       table_cards.clear()
 
-      # SORT PLAYER CARDS AFTER WINNING
       player_cards.sort(key=lambda x: (cards.index(x[1]), suits.index(x[0])))
 
       move_complete = True
@@ -136,11 +123,10 @@ while not(game_complete):
       moves_played = moves_played + 1
 
     else:
-      # WAR Begins. 
+
       print("WAR begins")
       input("Press Enter to continue...")
 
-      # Check whether sufficient number of cards
       if len(player_cards)<4 or len(comput_cards)<4:
         print("Not enough cards to continue WAR.")
         move_complete = True
@@ -150,22 +136,18 @@ while not(game_complete):
         print()
         print("Each side puts 3 cards face down.")
 
-        # PLAYER chooses 3 cards to place face down
         for kk in range(3):
           war_card = choose_player_card(player_cards, "Choose face-down war card " + str(kk+1) + ": ")
           table_cards.append(war_card)
 
-        # COMPUTER puts 3 random cards face down
         for kk in range(3):
           comp_index = random.randint(0, len(comput_cards)-1)
           table_cards.append(comput_cards.pop(comp_index))
 
         print("Now choose the deciding WAR card.")
 
-        # PLAYER chooses deciding WAR card
         war_player = choose_player_card(player_cards, "Choose your WAR card: ")
 
-        # COMPUTER chooses deciding WAR card
         comp_index = random.randint(0, len(comput_cards)-1)
         war_computer = comput_cards.pop(comp_index)
 
@@ -182,7 +164,6 @@ while not(game_complete):
           player_cards.extend(table_cards)
           table_cards.clear()
 
-          # SORT PLAYER CARDS AFTER WINNING WAR
           player_cards.sort(key=lambda x: (cards.index(x[1]), suits.index(x[0])))
 
           move_complete = True
@@ -199,7 +180,6 @@ while not(game_complete):
         else:
           print("WAR tied again. The battle continues...")
           input("Press Enter to continue...")
-          # move_complete stays False, so another round happens with current table cards
 
     if moves_played == 100:
       game_complete = True
@@ -210,7 +190,6 @@ while not(game_complete):
 print()
 print()
 
-# Game is over. Determine the winner. 
 if len(player_cards) > len(comput_cards):
 	print('PLAYER is the winner')
 elif len(player_cards) < len(comput_cards):
