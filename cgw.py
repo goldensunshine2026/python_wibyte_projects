@@ -17,7 +17,7 @@ print('Unshuffled Deck:')
 for kk in range(len(deck_of_cards)):
     print(deck_of_cards[kk], end = ' ')
 print()
-    
+
 random.shuffle(deck_of_cards) 
 
 print('Shuffled Deck:')
