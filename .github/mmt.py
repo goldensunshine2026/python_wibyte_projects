@@ -303,5 +303,4 @@ farelabel = tk.Label(
 )
 farelabel.place(x=980, y=835)
 
-
 window.mainloop()
