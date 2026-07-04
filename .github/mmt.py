@@ -4,7 +4,6 @@ import tkinter as tk
 def calculate():
     start = start_station.get()
     stop = stop_station.get()
-
     # Determine which line the stations are on
     if start in stn_sL:
         start_line = stn_sL
