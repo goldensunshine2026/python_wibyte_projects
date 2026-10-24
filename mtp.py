@@ -1,78 +1,131 @@
-subjects = ["English", "Maths", "Science", "Computer", "Hindi"]
+# Shopping Cart System
 
-choice = "yes"
+# Dictionary containing 25 grocery products and their prices
+products = {
+    "Apple": 100,
+    "Milk": 60,
+    "Bread": 40,
+    "Chocolate": 50,
+    "Chips": 30,
+    "Rice": 80,
+    "Sugar": 45,
+    "Salt": 20,
+    "Flour": 50,
+    "Eggs": 70,
+    "Butter": 55,
+    "Cheese": 90,
+    "Banana": 40,
+    "Orange": 60,
+    "Potato": 30,
+    "Tomato": 35,
+    "Onion": 40,
+    "Cooking Oil": 150,
+    "Biscuits": 25,
+    "Juice": 60,
+    "Tea": 120,
+    "Coffee": 180,
+    "Yogurt": 35,
+    "Carrot": 40,
+    "Cucumber": 30
+}
 
-while choice == "yes":
+# List to store items in the cart
+cart = []
 
-    print("      STUDENT REPORT CARD SYSTEM    ")
-    name = input("Enter student name: ")
+# Tuple containing payment methods
+payment_methods = ("Cash", "UPI", "Card")
 
-    student_id = name[:3].upper()
 
-    marks = []
+# Function using *args, **kwargs, and a default argument
+def show_bill(*items, discount=0, **details):
 
-    for subject in subjects:
+    total = 0
 
-        while True:
-            mark = int(input(f"Enter marks in {subject}: "))
+    print("\n========== YOUR BILL ==========")
 
-            if mark >= 0 and mark <= 100:
-                marks.append(mark)
-                break
-            else:
-                print("Invalid marks! Please enter marks between 0 and 100.")
+    # Calculate the price of each item
+    for item, quantity in items:
 
-    total = sum(marks)
+        price = products[item] * quantity
 
-    percentage = total / len(subjects)
+        total += price
 
-    fail = False
+        print(item, "x", quantity, "=", price)
 
-    for mark in marks:
-        if mark < 33:
-            fail = True
+    # Apply discount to the total
+    total = total - (total * discount / 100)
 
-    if fail:
-        grade = "Fail"
+    print("-------------------------------")
+    print("Discount:", discount, "%")
+    print("Total Amount: Rs.", round(total, 2))
+    print("Customer Details:", details)
 
-    elif percentage >= 90:
-        grade = "A+"
 
-    elif percentage >= 75:
-        grade = "A"
+# Display available groceries
+print("========== GROCERY SHOP ==========")
 
-    elif percentage >= 60:
-        grade = "B"
+print("\nAvailable Groceries:")
 
-    elif percentage >= 40:
-        grade = "C"
+for item, price in products.items():
+
+    print(item, "- Rs.", price)
+
+
+# Take user input and handle errors
+try:
+
+    number = int(input("\nHow many different products do you want to buy? "))
+
+    if number <= 0:
+        raise ValueError
+
+    # Ask the user to enter products
+    for i in range(number):
+
+        item = input("\nEnter grocery name: ").title()
+
+        if item not in products:
+            print("Product not available!")
+            continue
+
+        quantity = int(input("Enter quantity: "))
+
+        if quantity <= 0:
+            print("Invalid quantity!")
+            continue
+
+        # Add the product and quantity to the cart
+        cart.append((item, quantity))
+
+    # Display the shopping cart
+    print("\nYour Cart:", cart)
+
+    # Display payment methods
+    print("\nPayment Methods:", payment_methods)
+
+    payment = input("Choose payment method: ").title()
+
+    if payment not in payment_methods:
+        payment = "Cash"
+        print("Invalid payment method. Cash selected.")
+
+    # Generate the final bill
+    if cart:
+
+        show_bill(
+            *cart,
+            discount=10,
+            customer="Guest",
+            payment_method=payment
+        )
 
     else:
-        grade = "Fail"
 
+        print("\nYour cart is empty.")
 
-    print("\n========== REPORT CARD ==========")
-    print("Student Name :", name)
-    print("Student ID   :", student_id)
-    print("---------------------------------")
+except ValueError:
 
-    for i in range(len(subjects)):
-        if marks[i] >= 33:
-            status = "Pass"
-        else:
-            status = "Fail"
+    print("\nInvalid input! Please enter a valid number.")
 
-        print(subjects[i], ":", marks[i], "-", status)
-
-    print("Total Marks  :", total, "/ 500")
-    print("Percentage   :", percentage, "%")
-    print("Grade        :", grade)
-
-
-    # Final result
-    if grade == "Fail":
-        print("Result       : FAIL")
-    else:
-        print("Result       : PASS")
-
-    choice = input("\nDo you want to enter another student report? (yes/no): ").lower()
+# End of the program
+print("\nThank you for shopping!")
